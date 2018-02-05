@@ -1,0 +1,112 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!--<meta http-equiv="refresh" content="2">-->
+    <title>银行</title>
+    <script>
+        function run() {
+            var qszj = Number(document.getElementById("qszj").value);
+            var mnsy = Number(document.getElementById("mnsy").value);
+            var flns = Number(document.getElementById("flns").value);
+            var mnzjzj = Number(document.getElementById("mnzjzj").value);
+            var bjh = qszj + ( flns - 1 ) * mnzjzj;
+            document.getElementById("bjh").value = bjh;
+            var bj = qszj;
+            for(var i = 1; i <= flns; i++){
+                bj = bj  * ((1 + mnsy / 100));
+                if(i != flns)
+                    bj = bj + mnzjzj;
+            }
+            document.getElementById("lxh").value = bj - bjh;
+            document.getElementById("bxh").value = bj;
+        }
+        function tihuan() {
+            var string = new String(document.getElementById("yzfc").value);
+            var char = document.getElementById("cx").value;
+            var thw = document.getElementById("thw").value;
+            var regS = new RegExp(char,"g");
+            document.getElementById("thjg").value = string.replace(regS,thw);
+        }
+    </script>
+    <style>
+        table{
+            border-collapse: collapse;
+        }
+        tr td{
+            border: solid cornflowerblue 1px;
+            text-align: left;
+            padding: 3px;
+        }
+        body{
+            font-family: 微软雅黑;
+            font-size: 80%;
+            letter-spacing: 2px;
+        }
+        div{
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <table>
+            <tr>
+                <td>起始资金</td>
+                <td><input id="qszj" type="text">¥</td>
+            </tr>
+            <tr>
+                <td>每年收益</td>
+                <td><input id="mnsy" type="text">％</td>
+            </tr>
+            <tr>
+                <td>复利年数</td>
+                <td><input id="flns" type="text">年</td>
+            </tr>
+            <tr>
+                <td>每年追加资金</td>
+                <td><input id="mnzjzj" type="text">¥</td>
+            </tr>
+            <tr >
+                <td colspan="2" style="text-align: center"><input style="width: 200px" type="button" value="计算" onclick="run()"></td>
+            </tr>
+            <tr>
+                <td>本金和</td>
+                <td><input id="bjh" readonly= "readonly" class="result" type="text">¥</td>
+            </tr>
+            <tr>
+                <td>利息和</td>
+                <td><input id="lxh" readonly= "readonly" class="result" type="text">¥</td>
+            </tr>
+            <tr>
+                <td>本息和</td>
+                <td><input id="bxh" readonly= "readonly" class="result" type="text">¥</td>
+            </tr>
+        </table>
+    </div>
+    <div>
+        <table>
+            <tr>
+                <td>源字符串</td>
+                <td><input id="yzfc" type="text"></td>
+            </tr>
+            <tr>
+                <td>查询</td>
+                <td><input id="cx" type="text"></td>
+            </tr>
+            <tr>
+                <td>替换为</td>
+                <td><input id="thw" type="text"></td>
+            </tr>
+            <tr>
+                <td>替换结果</td>
+                <td><input id="thjg" type="text"></td>
+            </tr>
+            <tr>
+                <td colspan="2" style="text-align: center"><input type="button" value="替换" onclick="tihuan()"></td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>
