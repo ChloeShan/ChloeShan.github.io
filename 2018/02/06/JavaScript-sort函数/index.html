@@ -330,7 +330,26 @@
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        
+        <p>语法如下：<br>arrayObject.sort(sortby)</p>
+<p>对数组进行排序，在原数组上进行，并不产生新数组，返回值为数组的引用。</p>
+<p>若调用时没参数，则按照字符编码的顺序进行排序，所有元素转为字符串后再排列(默认是升序)，用来排列字符串类型的元素，因此，对于多位的数字并不一定能排序成功。</p>
+<p>这时便需要使用自定义比较器：</p>
+<p style="color : lightblue"><strong>自定义比较器的默认公式：<br><br>function cmp(a,b){return a-b};<br><br>array.sort(cmp);</strong></p>
+
+<ol>
+<li><p style="color : lightblue">为什么sort(cmp)中的cmp不加括号呢？</p></li>
+</ol>
+<blockquote>
+<p>因为如果是sort(cmp);<br>我们传入sort中的是一个回调函数，将一个函数作为参数传入另一个函数中反复使用。如果是sort(cmp())；  我们传入的仅仅是一个值</p>
+</blockquote>
+<ol>
+<li><p style="color :lightblue">如果我们不想进行升序排序，想进行降序排序怎么办？</p></li>
+</ol>
+<blockquote>
+<p>解决办法： 颠倒比较器的正负号<br>    比如：function cmp(a,b){return b-a;}</p>
+</blockquote>
+<p><a href="http://blog.csdn.net/baidu_25343343/article/details/54982747" target="_blank" rel="noopener">参考链接</a></p>
+
     </article>
     <!-- 前后页  -->
     <ul class="post-paginator">
