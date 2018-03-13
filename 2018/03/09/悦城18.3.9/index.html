@@ -340,21 +340,26 @@
 service: java + jdbc(连接数据库)
 数据库：mysql
 </code></pre><hr>
-<pre><code>.java 编译 .class 虚拟机
-文档注解/**
-idea javadoc
-</code></pre><p>##基础数据类型##<br>8种：</p>
-<p>#####整数#####<br>    byte: 1个字节 -128——127<br>    short: 2字节 -2^15——2^15-1<br>    int 4 字节默认<br>    long 8字节 数字后面加L</p>
-<p>#####浮点数#####<br>    float 4字节 精度6-7位 加f (float)强制转换<br>    double 8字节 精度15位 默认</p>
-<pre><code>强制类型转换/自动类型转换
-精度低变高自动转
-</code></pre><p>#####字符#####<br>    char<br>    转义字符：\</p>
-<p>#####布尔#####<br>    boolean：true/false</p>
-<p>##命名##<br>    驼峰</p>
-<p>##常量##<br>    final 只能被复制一次，可以定义随机数</p>
-<p>##运算符##<br>    = 右边当成整体<br>    不同精度运算，结果为高精度<br>    short a = 1;<br>    int b = 2;<br>    a = a + b; 不行，会防止超限<br>    a += b; 自带强制转换<br>    比较运算符的结果为布尔值<br>    与&amp;&amp;：短路，一个条件不成立便不再算后面的<br>    &amp; 无短路<br>    或||： 同样短路<br>    | 无短路</p>
-<p>###条件###<br>    条件?成立结果:不成立结果；<br>    结果类型会先测试<br>    类型取浮点型（若浮点和整形同时存在）<br>    位运算符？</p>
-<p>##数组##<br>    空间连续<br>    存储数据类型相同<br>    .length 为int[a][b][c]中的a<br>    数组的长度不能修改</p>
+<blockquote>
+<p>.java 编译 .class<br><br>虚拟机文档注解/**<br><br>idea javadoc</p>
+</blockquote>
+<p></p><h2>基础数据类型</h2><br>8种：<p></p>
+<p></p><h4>整数</h4><p></p>
+<p><br>byte: 1个字节 -128——127<br><br>short: 2字节 -2^15——2^15-1<br><br>int 4 字节默认<br><br>long 8字节 数字后面加L</p>
+
+<p></p><h4>浮点数</h4><p></p>
+<p>float 4字节 精度6-7位 加f (float)强制转换<br><br>    double 8字节 精度15位 默认</p>
+
+<blockquote>
+<p>强制类型转换/自动类型转换<br><br>精度低变高自动转</p>
+</blockquote>
+<p></p><h4>字符</h4><br>    char<br><br>    转义字符：\<p></p>
+<p></p><h4>布尔</h4><br>    boolean：true/false<p></p>
+<p></p><h2>命名</h2><br>驼峰<p></p>
+<p></p><h2>常量</h2><br>    final 只能被复制一次，可以定义随机数<p></p>
+<p></p><h2>运算符</h2><br>    <span>= 右边当成整体<br><br>    不同精度运算，结果为高精度<br><br>    short a = 1;<br><br>    int b = 2;<br><br>    a = a + b; 不行，会防止超限<br><br>    a += b; 自带强制转换<br><br>    比较运算符的结果为布尔值<br><br>    与&amp;&amp;：短路，一个条件不成立便不再算后面的<br><br>    &amp; 无短路<br><br>    或||： 同样短路<br><br>    | 无短路</span><p></p>
+<p></p><h2>条件</h2><br>    条件?成立结果:不成立结果；<br><br>    结果类型会先测试<br><br>    类型取浮点型（若浮点和整形同时存在）<br><br>    位运算符？<p></p>
+<p></p><h2>数组</h2><br>    空间连续<br><br>    存储数据类型相同<br><br>    .length 为int[a][b][c]中的a<br><br>    数组的长度不能修改<p></p>
 
     </article>
     <!-- 前后页  -->
@@ -444,7 +449,7 @@ idea javadoc
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">1.</span> <span class="toc-text">基础数据类型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#undefined"><span class="toc-number">1.0.1.</span> <span class="toc-text">整数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#undefined"><span class="toc-number">1.0.2.</span> <span class="toc-text">浮点数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#undefined"><span class="toc-number">1.0.3.</span> <span class="toc-text">字符</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#undefined"><span class="toc-number">1.0.4.</span> <span class="toc-text">布尔</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">2.</span> <span class="toc-text">命名</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">3.</span> <span class="toc-text">常量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">4.</span> <span class="toc-text">运算符</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">5.</span> <span class="toc-text">条件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">6.</span> <span class="toc-text">数组</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
