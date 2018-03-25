@@ -9,7 +9,7 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" >
-    <title>悦城18.3.16 笔记 · Shan&#39;s World</title>
+    <title>JS高程笔记（一） · Shan&#39;s World</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -266,7 +266,7 @@
                 <a href="/" >Shan&#39;s World.</a>
             </div>
             <div class="post-title">
-                <a href="#" class="post-name">悦城18.3.16 笔记</a>
+                <a href="#" class="post-name">JS高程笔记（一）</a>
             </div>
     </div>
     
@@ -287,7 +287,7 @@
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            悦城18.3.16 笔记
+            JS高程笔记（一）
             <!-- 404 -->
             
         </h1>
@@ -305,14 +305,14 @@
             
                 <div class= post-intro-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = 悦城>悦城</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = JavaScript>JavaScript</a>
     
 </div>
             
             <script>window._bd_share_config = { "common": { "bdSnsKey": {}, "bdText": "", "bdMini": "2", "bdMiniList": false, "bdPic": "", "bdStyle": "1", "bdSize": "16" }, "share": {} }; with (document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = "/static/api/js/share.js"];</script>
             <div class="post-intro-meta">
                 <span class="post-intro-calander iconfont-archer">&#xe676;</span>
-                <span class="post-intro-time">2018/03/16</span>
+                <span class="post-intro-time">2018/03/26</span>
                 
                 <span id="busuanzi_container_page_pv" class="busuanzi-pv">
                     <span class="iconfont-archer">&#xe604;</span>
@@ -336,59 +336,65 @@
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <p></p><h2>流程控制</h2><p></p>
-<p style="color : #4876FF;">if else 嵌套<br><br>三种循环、break、continue、嵌套<br><br><strong>无goto，其为保留字</strong><br></p>
-
-<p>switch(<code>int byte short char string</code>){<br>case 常量、编码为0、会自动检测范围（byte）<br>default 优先级低于 case</p>
-<h2 id=""><a href="#" class="headerlink" title="}"></a>}</h2><p></p><h2>类与对象</h2><p></p>
-<ul>
-<li>对象是类的具体实例</li>
-<li>属性（特征）、类方法（所能完成的操作）</li>
-<li>定义，返回值兼容</li>
-<li>重载 <strong>函数名称相同，参数不同（类型，个数，参数顺序），跟返回值无关，根据参数选择最合适的方法</strong></li>
-<li>构造方法 <strong>可以重载</strong></li>
-<li>this <strong>this.属性 this.方法 可以调用构造方法 this(参数)(放在首行，不能嵌套调用)</strong></li>
-<li>方法执行到return会立即停止，返回到上一层，只能返回一个值</li>
+        <h3 id="关于JS"><a href="#关于JS" class="headerlink" title="关于JS"></a>关于JS</h3><ul>
+<li>JavaScript的实现<ul>
+<li>ECMAScript 核心</li>
+<li>DOM 文档对象模型</li>
+<li>BOM 浏览器对象模型</li>
 </ul>
-<p>class 类名{<br>  属性 = 默认值 （0、‘0’、null)；<br>  返回值类型 方法名(参数列表){}；<br>}</p>
-<p>main{<br>  类名 对象名 = new 类名();<br>  对象名.属性（访问属性）<br>  对象名.类方法名()（访问方法）</p>
-<h2 id="-1"><a href="#-1" class="headerlink" title="}"></a>}</h2><p></p><h2>类的继承</h2><br>单继承<br>子类拥有父类的属性和方法，在其基础上可以拓展出自己的属性和方法<p></p>
-<ul>
-<li>继承的概念和实现方法 <strong>extends</strong></li>
-<li>子类对象的构建过程、子类构造方法与父类构造方法关系——自动调用、必须定义、super关键字（父类构造方法）</li>
-<li>方法的覆盖(重写，名 参数类型 参数个数 都相同)及相关关键字<ol>
-<li>就近原则</li>
-<li>super可以找到被屏蔽，重写</li>
-</ol>
-</li>
-<li>引用的概念、父类的引用指向子类对象<ol>
-<li>调用子类的方法（看实例）</li>
-<li>调用父类的属性（看引用）</li>
-<li>通过方法调用属性（该方法所在类的属性）</li>
-<li>可以父类数组存放不同子类对象</li>
-</ol>
 </li>
 </ul>
-<p>先创建父类再创建子类</p>
-<p><strong>父类有参构造，需要在子类构造方法中手动调用父类构造方法super()，且写在第一行</strong></p>
-<p>final 属性 意味着不能第二次赋值 在类内<br>final class 不能派生子类</p>
+<h3 id="在HTML中使用JS"><a href="#在HTML中使用JS" class="headerlink" title="在HTML中使用JS"></a>在HTML中使用JS</h3><h4 id="lt-script-gt-元素"><a href="#lt-script-gt-元素" class="headerlink" title="&lt;script&gt;元素"></a>&lt;script&gt;元素</h4><p><em>6个属性：</em></p>
+<ul>
+<li><strong>async</strong> 异步脚本 外部有效<br>　　目的是不让页面等待两个脚本下载和执行，从而异步加载页面其他内容，执行顺序不定。
+　　</li>
+<li><p><strong>defer</strong> 延迟脚本 外部有效<br>　　HTML4.01定义，表明脚本在执行时不会影响页面的构造，脚本会被延迟到整个页面都解析完毕后再运行，告诉浏览器立即下载，但延迟执行。<br>　　在现实中，延迟脚本不一定会按照顺序执行，因此最好只包含一个延迟脚本。<br>　　HTML5（IE8及以后）会忽略给嵌入脚本设置的defer属性，IE4-IE7还支持。</p>
+</li>
+<li><p><strong>charset</strong><br>　　表示通过src属性指定的代码的字符集，少用</p>
+</li>
+<li><strong>language</strong><br>　　已废弃</li>
+<li><strong>src</strong><br>　　标识包含要执行代码的外部文件，引用外部文件，库等</li>
+<li><strong>type</strong><br>　　表示编写代码使用的脚本语言的内容类型，默认值为text/javasript</li>
+</ul>
+<p><em>使用&lt;script&gt;的方式：</em></p>
+<ul>
+<li>嵌入<br>　　从上到下依次解释</li>
+<li>包含外部<br>　　外部文件仅需包含标签之间的JS代码即可。<br>　　不应包含嵌入的代码，只会下载并执行外部脚本文件<ul>
+<li>优点：<ul>
+<li>可维护性</li>
+<li>可缓存<br>　　若两个页面使用同一个文件，那么这个文件只需下载一次</li>
+<li>适应未来<br>　　HTML和XHTML包含外部文件的语法是相同的</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><em>标签的位置</em><br>　　放在body的结尾处，若放在head内，意味着必须等到全部JS代码都被下载、解析和执行完成以后，才能开始呈现页面的内容。</p>
+<p><em>XHTML</em><br>　　用CData片段来包含JS（浏览器兼容XHTML）</p>
+<pre><code>&lt;script&gt;&lt;![CDATA[...]]&gt;&lt;/script&gt;
+</code></pre><p>　　或者（浏览器不兼容XHTML）</p>
+<pre><code>&lt;script&gt;
+//&lt;![CDATA[
+    ...
+//]]&gt;
+&lt;/script&gt;
+</code></pre><h4 id="文档模式DOCTYPE"><a href="#文档模式DOCTYPE" class="headerlink" title="文档模式DOCTYPE"></a>文档模式DOCTYPE</h4><ul>
+<li>混杂模式<br>　　让IE的行为与IE5相同，包含非标准特性<br>　　未发现文档类型声明时，浏览器默认开启混杂模式</li>
+<li>标准模式<br>　　更接近标准行为<br>　　&lt;!DOCTYEP html&gt;</li>
+<li>准标准模式<br>　　不标准的地方主要在处理图片间隙的时候</li>
+</ul>
 
     </article>
     <!-- 前后页  -->
     <ul class="post-paginator">
         <li class="next">
             
-                <div class="nextSlogan">Next Post</div>
-                <a href= "/2018/03/20/《CSS高级Web标准解决方案》之笔记（一）/" title= 《CSS高级Web标准解决方案》之笔记（一） >
-                    <div class="nextTitle">《CSS高级Web标准解决方案》之笔记（一）</div>
-                </a>
-            
         </li>
         <li class="previous">
             
                 <div class="prevSlogan">Previous Post</div>
-                <a href= "/2018/03/09/悦城18.3.9/" title= 悦城18.3.9 笔记 >
-                    <div class="prevTitle">悦城18.3.9 笔记</div>
+                <a href= "/2018/03/23/悦城18.3.23/" title= 悦城18.3.23 笔记 >
+                    <div class="prevTitle">悦城18.3.23 笔记</div>
                 </a>
             
         </li>
@@ -466,7 +472,7 @@
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">1.</span> <span class="toc-text">流程控制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#"><span class="toc-number">2.</span> <span class="toc-text">}</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">3.</span> <span class="toc-text">类与对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#-1"><span class="toc-number">4.</span> <span class="toc-text">}</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">5.</span> <span class="toc-text">类的继承</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#关于JS"><span class="toc-number">1.</span> <span class="toc-text">关于JS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#在HTML中使用JS"><span class="toc-number">2.</span> <span class="toc-text">在HTML中使用JS</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#lt-script-gt-元素"><span class="toc-number">2.1.</span> <span class="toc-text">&lt;script&gt;元素</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#文档模式DOCTYPE"><span class="toc-number">2.2.</span> <span class="toc-text">文档模式DOCTYPE</span></a></li></ol></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
