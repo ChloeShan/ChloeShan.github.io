@@ -9,7 +9,7 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" >
-    <title>JS高程笔记（二） · Shan&#39;s World</title>
+    <title>Shan&#39;s World</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -252,8 +252,6 @@
 </head>
 
     
-        <body class="post-body">
-    
     
 <header class="header">
 
@@ -261,261 +259,96 @@
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
     
-    <div class="banner">
-            <div class="blog-title">
-                <a href="/" >Shan&#39;s World.</a>
-            </div>
-            <div class="post-title">
-                <a href="#" class="post-name">JS高程笔记（二）</a>
-            </div>
-    </div>
-    
     <a class="home-link" href=/>Shan's World.</a>
 </header>
     <div class="wrapper">
         <div class="site-intro">
     
     <!-- 主页  -->
-    
-    
-    <!-- 404页  -->
             
-    <div class="site-intro-img" style="background-image: url(/intro/3.jpg)"></div>
+    <div class="site-intro-img" style="background-image: url(/)"></div>
     <div class="site-intro-placeholder"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            JS高程笔记（二）
-            <!-- 404 -->
-            
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
             
-            
-            <!-- 404 -->
-            
         </p>
         <!-- 文章页meta -->
-        
-            <!-- 文章页标签  -->
-            
-                <div class= post-intro-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = JavaScript>JavaScript</a>
-    
-</div>
-            
-            <script>window._bd_share_config = { "common": { "bdSnsKey": {}, "bdText": "", "bdMini": "2", "bdMiniList": false, "bdPic": "", "bdStyle": "1", "bdSize": "16" }, "share": {} }; with (document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = "/static/api/js/share.js"];</script>
-            <div class="post-intro-meta">
-                <span class="post-intro-calander iconfont-archer">&#xe676;</span>
-                <span class="post-intro-time">2018/03/31</span>
-                
-                <span id="busuanzi_container_page_pv" class="busuanzi-pv">
-                    <span class="iconfont-archer">&#xe604;</span>
-                    <span id="busuanzi_value_page_pv"></span>
-                </span>
-                
-                <span class="shareWrapper">
-                    <span class="iconfont-archer shareIcon">
-                        &#xe601;
-                    </span>
-                    <span class="bdsharebuttonbox">
-                        <a href="#" class="bds_more shareText" data-cmd="more">Share</a>
-                    </span>
-                </span>
-            </div>
         
     </div>
 </div>
         <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
 
         <div class="container container-unloaded">
-            <main class="main post-page">
-    <article class="article-entry">
-        <ul>
-<li>引用类型<ul>
-<li>Object类型</li>
-<li>Array类型<ul>
-<li>Array.isArray()</li>
-<li>valueOf()</li>
-<li>toLocaleString()</li>
-<li>toString()</li>
-<li>join()</li>
-<li>push()</li>
-<li>pop()</li>
-<li>shift()</li>
-<li>unshift()</li>
-<li>reverse()</li>
-<li>sort()</li>
-<li>concat()</li>
-<li>slice()</li>
-<li>splice()</li>
-<li>indexOf()</li>
-<li>lastIndexOf()</li>
-<li>every()</li>
-<li>filter()</li>
-<li>forEach()</li>
-<li>map()</li>
-<li>some()</li>
-<li>reduce()</li>
-<li>reduceRight()</li>
-</ul>
-</li>
-<li>Date类型<ul>
-<li>Date.parse()</li>
-<li>Date.UTC()</li>
-<li>Date.now()</li>
-<li>valueOf()</li>
-<li>toLocaleString()</li>
-<li>toString()</li>
-</ul>
-</li>
-<li>RegExp类型（正则表达式）</li>
-<li>Function类型</li>
-</ul>
-</li>
-</ul>
-<h1 id="引用类型"><a href="#引用类型" class="headerlink" title="引用类型"></a>引用类型</h1><pre><code>所有对象都具有toLocaleString(),toString(),valueOf()方法
-</code></pre><h3 id="Object类型"><a href="#Object类型" class="headerlink" title="Object类型"></a>Object类型</h3><pre><code>var person1 = new Object();//new + 构造函数
-var person2 = {              //对象字面量
-    name : &quot;N&quot;, //也可&quot;name&quot;
-    age : 29
-};
-var p = {};//与new Object()相同
-p.name = &quot;N&quot;;
-p.age = 29;//以.的方式访问属性
-p[&quot;name&quot;]//以字符串形式访问属性
-var n = &quot;name&quot;;
-p[n];//以变量访问属性
-</code></pre><h3 id="Array类型"><a href="#Array类型" class="headerlink" title="Array类型"></a>Array类型</h3><p>数组内每一项都可保存任何类型的数据，可动态调整</p>
-<pre><code>var colors = new Array();//可省略new
-var people = new Array(20);//people.length = 20;可通过length移除，添加项
-var args = new Array(&quot;n&quot;,&quot;b&quot;,&quot;a&quot;);
-var a = [];
-var b = [1,2,];//不要这样，会生成3（最后一项为undefined）或2项
-args[index];
-</code></pre><h4 id="检测数组"><a href="#检测数组" class="headerlink" title="检测数组"></a>检测数组</h4><pre><code>value instanceof Array;//若多个框架，原生数组不同，则不可取
-Array.isArray(value);
-</code></pre><h4 id="转换方法"><a href="#转换方法" class="headerlink" title="转换方法"></a>转换方法</h4><pre><code>var a = [&apos;red&apos;,&apos;black&apos;,&apos;blue&apos;];
-a.toLocaleString();
-a.toString();
-a.valueOf();
-a.join();//若数组中的某项值为undefined或null，则空字符串
-alert(a);//red,black,blue 后台会调用a.toString()方法，
-alert(a.join(&quot;|&quot;));//会使用|为分隔符，不传参或undefined，则为逗号
-</code></pre><h4 id="栈方法"><a href="#栈方法" class="headerlink" title="栈方法"></a>栈方法</h4><pre><code>push(value);//推入，返回修改后数组的长度
-pop();//弹出，返回移除的项
-</code></pre><h4 id="队列方法"><a href="#队列方法" class="headerlink" title="队列方法"></a>队列方法</h4><pre><code>shift();//移除第一项，并返回该项
-push();与shift合用模拟队列
-unshift();//移除最末项，并返回
-pop();//与unshift合用模拟逆队列
-</code></pre><h4 id="重排序方法"><a href="#重排序方法" class="headerlink" title="重排序方法"></a>重排序方法</h4><p>返回值为排序后的数组</p>
-<pre><code>reverse();//倒序
-sort();//转换成字符串升序，先调用toString(),进行字符串比较
-function compare(value1,value2){
-//比较函数：若第一个参数应该位于第二个参数之前，则返回负数，反之则返回正数，相等则返回0
-    if(value1 &lt; value2){
-        return -1;
-    }else if(value1 &gt; value2){
-        return 1;
-    }else{
-        return 0;
-    }
-}
-function compare2(value1,value2){
-//简化compare
-    return value2 - value1;
-}
-sort(compare);//可接受一个比较函数为参数
-</code></pre><h4 id="操作方法"><a href="#操作方法" class="headerlink" title="操作方法"></a>操作方法</h4><pre><code>concat();//根据原数组拼接，返回一个新数组，默认返回当前数组，原数组不变
-slice();//参数：返回项的起始位置和结束位置，形成新数组，不包括结束位置项，不影响原始数组。
-slice(-2,-1);//length = 5,则与slice(3,4)相同，结束位置小于开始位置，则返回空数组。
-splice();//会改变原来的数组，返回删除的项
-splice(0,2)//删除第一项的位置0，删除项数2
-splice(2,0,&apos;red&apos;,&apos;green&apos;);//插入多个项，从位置2插入，删除0个
-splice(2,1,&apos;red&apos;,&apos;green&apos;);//从2的位置删除1个，并插入
-</code></pre><h4 id="位置方法"><a href="#位置方法" class="headerlink" title="位置方法"></a>位置方法</h4><pre><code>indexOf();//默认从第一项开始向后查，返回位置，使用===匹配
-lastIndexOf();//从最后一下开始向前查
-indexOf(4,5);//查找4，从位置5开始
-</code></pre><h4 id="迭代方法"><a href="#迭代方法" class="headerlink" title="迭代方法"></a>迭代方法</h4><p>不修改数组中包含的值<br>参数：对数组中每一个所运行的函数，以及作用域对象(this)<br>传入函数的参数：item数组项的值,index位置,array数组对象本身</p>
-<pre><code>var numbers = [1,2,3,4,5,4,3,2,1];
-every();//若每一项的函数都返回true,则返回true
-numbers.every(function(item,index,array){
-    return(item &gt; 2);
-});//false
-some();//若有一项的函数返回true,则返回true
-numbers.some(function(item,index,array){
-    return(item &gt; 2);
-});//true
-filter();//返回该函数会返回true的项所组成的数组
-numbers.filter(function(item,index,array){
-    return(item &gt; 2);
-});//3,4,5,4,3
-forEach();//无返回
-map();//返回每次函数调用的结果组成的数组
-numbers.map(function(item,index,array){
-    return(item *);
-});//2,4,6,8,10,8,6,4,2
-</code></pre><h4 id="归并方法"><a href="#归并方法" class="headerlink" title="归并方法"></a>归并方法</h4><p>参数：对数组中每一个所运行的函数，以及作为归并的基础值<br>传入函数的参数：prev前一个值,cur当前值,index位置,array数组本身<br>传入函数的任何返回值都会作为第一个参数自动传给下一项，第一次迭代发生在数组的第二项上</p>
-<pre><code>var values = [1,2,3,4,5];
-values.reduce(function(pre,cur,index,array){
-    return (pre + cur);
-    });//从前往后，求和15
-values.reduceRight(function(pre,cur,index,array){
-    return (pre + cur);
-    });//从后往前，求和15
-</code></pre><h3 id="Date类型"><a href="#Date类型" class="headerlink" title="Date类型"></a>Date类型</h3><p>1970.1.1 00：00开始计时，距离现在的毫秒数</p>
-<pre><code>var now = new Date();//当前日期
-Date.parse(&apos;May 25, 2004 16:20&apos;);//返回距离某天的毫秒数,若不能反映日期则返回NaN
-var date = new Date(Date.parse(&apos;May 25, 2004 16:20&apos;));
-alert(date);//Tue May 25 2004 16:20:00 GMT+0800 (中国标准时间)
-new Date(&apos;May 25, 2004 16:20&apos;);//相当于后台调用parse函数
-Date.UTC();//参数：年，月份（一月为0），天（1-31，默认1），小时（0-23，默认0），分钟（默认0），秒（默认0），毫秒（默认0）。年月必须填。
-var date = new Date(Date.UTC(2017,1,2,17));
-alert(date);//加完东八区的结果，Fri Feb 03 2017 01:00:00 GMT+0800 (中国标准时间)
-var date1 = new Date(2017,1);//本地时间
-alert(date1);//Wed Feb 01 2017 00:00:00 GMT+0800 (中国标准时间)
-Date.now();//返回调用这个方法时的日期和时间的毫秒数
-var start = Date.now();//等价var start = +new Date();时间戳
-...
-var stop = Date.now();
-var result = stop - start;//中间的时间
-</code></pre><h4 id="继承下来的方法"><a href="#继承下来的方法" class="headerlink" title="继承下来的方法"></a>继承下来的方法</h4><pre><code>valueOf();//返回日期的毫秒表示，可比大小
-toLocaleString();//字符串
-toString();//字符串
-</code></pre><h3 id="RegExp类型（正则表达式）"><a href="#RegExp类型（正则表达式）" class="headerlink" title="RegExp类型（正则表达式）"></a>RegExp类型（正则表达式）</h3><h3 id="Function类型"><a href="#Function类型" class="headerlink" title="Function类型"></a>Function类型</h3>
-    </article>
-    <!-- 前后页  -->
-    <ul class="post-paginator">
-        <li class="next">
-            
-        </li>
-        <li class="previous">
-            
-                <div class="prevSlogan">Previous Post</div>
-                <a href= "/2018/03/30/悦城18.3.30/" title= 悦城18.3.30 笔记 >
-                    <div class="prevTitle">悦城18.3.30 笔记</div>
-                </a>
-            
-        </li>
-    </ul>
-    <!-- 评论插件 -->
-    <!-- 来必力City版安装代码 -->
-
-<!-- City版安装代码已完成 -->
+            <main class="main index-page">
     
     
-    <!--PC版-->
-
-    <!--PC版-->
-
-
     
-    <!-- 评论 -->
+        <article class="index-post">
+            <a class="abstract-title" href = "/2018/04/04/JS高程笔记（二）/" >
+                
+                    <span>JS高程笔记（二）</span>
+            </a>
+            <div class="abstract-content">
+                
+引用类型
+Object类型
+Array类型
+Array.isArray()
+valueOf()
+toLocaleString()
+toString()
+join()
+push()
+pop()
+shift()
+unshift()
+reverse()
+sort()
+concat()
+slice()
+splice()
+indexOf()
+lastIndexOf()
+every()
+filter()
+forEach()
+map()
+some()
+reduce()
+reduceRight()
+
+
+Date类型
+Date.parse()
+Date.UTC()
+Date.now()
+valueOf(...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/04</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = JavaScript>JavaScript</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    <!-- paginator  -->
+    
 </main>
             <!-- profile -->
             
@@ -571,13 +404,6 @@ toString();//字符串
 </footer>
     </div>
     <!-- toc -->
-    
-    <div class="toc-wrapper">
-        <div class="toc-catalog">
-            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
-        </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#引用类型"><span class="toc-number">1.</span> <span class="toc-text">引用类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Object类型"><span class="toc-number">1.0.1.</span> <span class="toc-text">Object类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Array类型"><span class="toc-number">1.0.2.</span> <span class="toc-text">Array类型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#检测数组"><span class="toc-number">1.0.2.1.</span> <span class="toc-text">检测数组</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#转换方法"><span class="toc-number">1.0.2.2.</span> <span class="toc-text">转换方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#栈方法"><span class="toc-number">1.0.2.3.</span> <span class="toc-text">栈方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#队列方法"><span class="toc-number">1.0.2.4.</span> <span class="toc-text">队列方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#重排序方法"><span class="toc-number">1.0.2.5.</span> <span class="toc-text">重排序方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#操作方法"><span class="toc-number">1.0.2.6.</span> <span class="toc-text">操作方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#位置方法"><span class="toc-number">1.0.2.7.</span> <span class="toc-text">位置方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#迭代方法"><span class="toc-number">1.0.2.8.</span> <span class="toc-text">迭代方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#归并方法"><span class="toc-number">1.0.2.9.</span> <span class="toc-text">归并方法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Date类型"><span class="toc-number">1.0.3.</span> <span class="toc-text">Date类型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#继承下来的方法"><span class="toc-number">1.0.3.1.</span> <span class="toc-text">继承下来的方法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RegExp类型（正则表达式）"><span class="toc-number">1.0.4.</span> <span class="toc-text">RegExp类型（正则表达式）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Function类型"><span class="toc-number">1.0.5.</span> <span class="toc-text">Function类型</span></a></li></ol></li></ol></li></ol>
-    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -703,7 +529,7 @@ toString();//字符串
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">03/31</span><a class="archive-post-title" href= "/2018/03/31/JS高程笔记（二）/" >JS高程笔记（二）</a>
+            <span class="archive-post-date">04/04</span><a class="archive-post-title" href= "/2018/04/04/JS高程笔记（二）/" >JS高程笔记（二）</a>
         </li>
     
     

@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+<html>
+    <!-- title -->
+
+
+
+
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" >
+    <title>JS高程笔记（二） · Shan&#39;s World</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        height: 50vh;
+        overflow: hidden;
+        box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.7);
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s 1;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href= /css/style.css?v=20180204 as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="stylesheet" type="text/css" href= /css/mobile.css?v=20180204 media="(max-width: 980px)"/>
+    <link rel="icon" href= /assets/favicon.ico>
+    <script>
+  // load webfont-loader async, and add callback function
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+  
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntroTags = document.getElementsByClassName('post-intro-tags')[0],
+        postIntroMeat = document.getElementsByClassName('post-intro-meta')[0];
+      if (postIntroTags) {
+        postIntroTags.classList.add('post-fade-in');
+      }
+      if (postIntroMeat) {
+        postIntroMeat.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  async("https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", asyncCb)
+</script>
+    <script>
+        (function (w) {
+            "use strict";
+            // rel=preload support test
+            if (!w.loadCSS) {
+                w.loadCSS = function () { };
+            }
+            // define on the loadCSS obj
+            var rp = loadCSS.relpreload = {};
+            // rel=preload feature support test
+            // runs once and returns a function for compat purposes
+            rp.support = (function () {
+                var ret;
+                try {
+                    ret = w.document.createElement("link").relList.supports("preload");
+                } catch (e) {
+                    ret = false;
+                }
+                return function () {
+                    return ret;
+                };
+            })();
+
+            // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+            // then change that media back to its intended value on load
+            rp.bindMediaToggle = function (link) {
+                // remember existing media attr for ultimate state, or default to 'all'
+                var finalMedia = link.media || "all";
+
+                function enableStylesheet() {
+                    link.media = finalMedia;
+                }
+
+                // bind load handlers to enable media
+                if (link.addEventListener) {
+                    link.addEventListener("load", enableStylesheet);
+                } else if (link.attachEvent) {
+                    link.attachEvent("onload", enableStylesheet);
+                }
+
+                // Set rel and non-applicable media type to start an async request
+                // note: timeout allows this to happen async to let rendering continue in IE
+                setTimeout(function () {
+                    link.rel = "stylesheet";
+                    link.media = "only x";
+                });
+                // also enable media after 3 seconds,
+                // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+                setTimeout(enableStylesheet, 3000);
+            };
+
+            // loop through link elements in DOM
+            rp.poly = function () {
+                // double check this to prevent external calls from running
+                if (rp.support()) {
+                    return;
+                }
+                var links = w.document.getElementsByTagName("link");
+                for (var i = 0; i < links.length; i++) {
+                    var link = links[i];
+                    // qualify links to those with rel=preload and as=style attrs
+                    if (link.rel === "preload" && link.getAttribute("as") === "style" && !link.getAttribute("data-loadcss")) {
+                        // prevent rerunning on link
+                        link.setAttribute("data-loadcss", true);
+                        // bind listeners to toggle media back
+                        rp.bindMediaToggle(link);
+                    }
+                }
+            };
+
+            // if unsupported, run the polyfill
+            if (!rp.support()) {
+                // run once at least
+                rp.poly();
+
+                // rerun poly on an interval until onload
+                var run = w.setInterval(rp.poly, 500);
+                if (w.addEventListener) {
+                    w.addEventListener("load", function () {
+                        rp.poly();
+                        w.clearInterval(run);
+                    });
+                } else if (w.attachEvent) {
+                    w.attachEvent("onload", function () {
+                        rp.poly();
+                        w.clearInterval(run);
+                    });
+                }
+            }
+            // commonjs
+            if (typeof exports !== "undefined") {
+                exports.loadCSS = loadCSS;
+            }
+            else {
+                w.loadCSS = loadCSS;
+            }
+        }(typeof global !== "undefined" ? global : this));
+    </script>
+    <script src="//cdn.staticfile.org/jquery/3.2.1/jquery.min.js" defer></script>
+    
+    <script src="/scripts/main.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+</head>
+
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >Shan&#39;s World.</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">JS高程笔记（二）</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href=/>Shan's World.</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro">
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-img" style="background-image: url(/intro/3.jpg)"></div>
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            JS高程笔记（二）
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <!-- 文章页标签  -->
+            
+                <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = JavaScript>JavaScript</a>
+    
+</div>
+            
+            <script>window._bd_share_config = { "common": { "bdSnsKey": {}, "bdText": "", "bdMini": "2", "bdMiniList": false, "bdPic": "", "bdStyle": "1", "bdSize": "16" }, "share": {} }; with (document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = "/static/api/js/share.js"];</script>
+            <div class="post-intro-meta">
+                <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                <span class="post-intro-time">2018/04/04</span>
+                
+                <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                    <span class="iconfont-archer">&#xe604;</span>
+                    <span id="busuanzi_value_page_pv"></span>
+                </span>
+                
+                <span class="shareWrapper">
+                    <span class="iconfont-archer shareIcon">
+                        &#xe601;
+                    </span>
+                    <span class="bdsharebuttonbox">
+                        <a href="#" class="bds_more shareText" data-cmd="more">Share</a>
+                    </span>
+                </span>
+            </div>
+        
+    </div>
+</div>
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <ul>
+<li>引用类型<ul>
+<li>Object类型</li>
+<li>Array类型<ul>
+<li>Array.isArray()</li>
+<li>valueOf()</li>
+<li>toLocaleString()</li>
+<li>toString()</li>
+<li>join()</li>
+<li>push()</li>
+<li>pop()</li>
+<li>shift()</li>
+<li>unshift()</li>
+<li>reverse()</li>
+<li>sort()</li>
+<li>concat()</li>
+<li>slice()</li>
+<li>splice()</li>
+<li>indexOf()</li>
+<li>lastIndexOf()</li>
+<li>every()</li>
+<li>filter()</li>
+<li>forEach()</li>
+<li>map()</li>
+<li>some()</li>
+<li>reduce()</li>
+<li>reduceRight()</li>
+</ul>
+</li>
+<li>Date类型<ul>
+<li>Date.parse()</li>
+<li>Date.UTC()</li>
+<li>Date.now()</li>
+<li>valueOf()</li>
+<li>toLocaleString()</li>
+<li>toString()</li>
+</ul>
+</li>
+<li>RegExp类型（正则表达式）</li>
+<li>Function类型<ul>
+<li>apply()</li>
+<li>call()</li>
+<li>bind()</li>
+</ul>
+</li>
+<li>基本包装类型<ul>
+<li>String<ul>
+<li>length属性</li>
+<li>charAt()</li>
+<li>charCodeAt()</li>
+<li>concat()</li>
+<li>slice()</li>
+<li>substr()</li>
+<li>substring()</li>
+<li>indexOf()</li>
+<li>lastIndexOf()</li>
+<li>trim()</li>
+<li>toLowerCase()</li>
+<li>toLocaleLowerCase()</li>
+<li>toUpperCase()</li>
+<li>toLocaleUpperCase()</li>
+<li>match()</li>
+<li>search()</li>
+<li>replace():</li>
+<li>split()</li>
+<li>localeCompare()</li>
+<li>fromCharCode()</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>单体内置对象<ul>
+<li>Global对象<ul>
+<li>encodeURI()</li>
+<li>encodeURIComponent()</li>
+<li>eval()</li>
+</ul>
+</li>
+<li>Math对象<ul>
+<li>max()</li>
+<li>min()</li>
+<li>ceil()</li>
+<li>floor()</li>
+<li>round()</li>
+<li>random()</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="引用类型"><a href="#引用类型" class="headerlink" title="引用类型"></a>引用类型</h1><pre><code>所有对象都具有toLocaleString(),toString(),valueOf()方法
+</code></pre><h3 id="Object类型"><a href="#Object类型" class="headerlink" title="Object类型"></a>Object类型</h3><pre><code>var person1 = new Object();//new + 构造函数
+var person2 = {              //对象字面量
+    name : &quot;N&quot;, //也可&quot;name&quot;
+    age : 29
+};
+var p = {};//与new Object()相同
+p.name = &quot;N&quot;;
+p.age = 29;//以.的方式访问属性
+p[&quot;name&quot;]//以字符串形式访问属性
+var n = &quot;name&quot;;
+p[n];//以变量访问属性
+</code></pre><h3 id="Array类型"><a href="#Array类型" class="headerlink" title="Array类型"></a>Array类型</h3><p>数组内每一项都可保存任何类型的数据，可动态调整</p>
+<pre><code>var colors = new Array();//可省略new
+var people = new Array(20);//people.length = 20;可通过length移除，添加项
+var args = new Array(&quot;n&quot;,&quot;b&quot;,&quot;a&quot;);
+var a = [];
+var b = [1,2,];//不要这样，会生成3（最后一项为undefined）或2项
+args[index];
+</code></pre><h4 id="检测数组"><a href="#检测数组" class="headerlink" title="检测数组"></a>检测数组</h4><pre><code>value instanceof Array;//若多个框架，原生数组不同，则不可取
+Array.isArray(value);
+</code></pre><h4 id="转换方法"><a href="#转换方法" class="headerlink" title="转换方法"></a>转换方法</h4><pre><code>var a = [&apos;red&apos;,&apos;black&apos;,&apos;blue&apos;];
+a.toLocaleString();
+a.toString();
+a.valueOf();
+a.join();//若数组中的某项值为undefined或null，则空字符串
+alert(a);//red,black,blue 后台会调用a.toString()方法，
+alert(a.join(&quot;|&quot;));//会使用|为分隔符，不传参或undefined，则为逗号
+</code></pre><h4 id="栈方法"><a href="#栈方法" class="headerlink" title="栈方法"></a>栈方法</h4><pre><code>push(value);//推入，返回修改后数组的长度
+pop();//弹出，返回移除的项
+</code></pre><h4 id="队列方法"><a href="#队列方法" class="headerlink" title="队列方法"></a>队列方法</h4><pre><code>shift();//移除第一项，并返回该项
+push();与shift合用模拟队列
+unshift();//移除最末项，并返回
+pop();//与unshift合用模拟逆队列
+</code></pre><h4 id="重排序方法"><a href="#重排序方法" class="headerlink" title="重排序方法"></a>重排序方法</h4><p>返回值为排序后的数组</p>
+<pre><code>reverse();//倒序
+sort();//转换成字符串升序，先调用toString(),进行字符串比较
+function compare(value1,value2){
+//比较函数：若第一个参数应该位于第二个参数之前，则返回负数，反之则返回正数，相等则返回0
+    if(value1 &lt; value2){
+        return -1;
+    }else if(value1 &gt; value2){
+        return 1;
+    }else{
+        return 0;
+    }
+}
+function compare2(value1,value2){
+//简化compare
+    return value2 - value1;
+}
+sort(compare);//可接受一个比较函数为参数
+</code></pre><h4 id="操作方法"><a href="#操作方法" class="headerlink" title="操作方法"></a>操作方法</h4><pre><code>concat();//根据原数组拼接，返回一个新数组，默认返回当前数组，原数组不变
+slice();//参数：返回项的起始位置和结束位置，形成新数组，不包括结束位置项，不影响原始数组。
+slice(-2,-1);//length = 5,则与slice(3,4)相同，结束位置小于开始位置，则返回空数组。
+splice();//会改变原来的数组，返回删除的项
+splice(0,2)//删除第一项的位置0，删除项数2
+splice(2,0,&apos;red&apos;,&apos;green&apos;);//插入多个项，从位置2插入，删除0个
+splice(2,1,&apos;red&apos;,&apos;green&apos;);//从2的位置删除1个，并插入
+</code></pre><h4 id="位置方法"><a href="#位置方法" class="headerlink" title="位置方法"></a>位置方法</h4><pre><code>indexOf();//默认从第一项开始向后查，返回位置，使用===匹配
+lastIndexOf();//从最后一下开始向前查
+indexOf(4,5);//查找4，从位置5开始
+</code></pre><h4 id="迭代方法"><a href="#迭代方法" class="headerlink" title="迭代方法"></a>迭代方法</h4><p>不修改数组中包含的值<br>参数：对数组中每一个所运行的函数，以及作用域对象(this)<br>传入函数的参数：item数组项的值,index位置,array数组对象本身</p>
+<pre><code>var numbers = [1,2,3,4,5,4,3,2,1];
+every();//若每一项的函数都返回true,则返回true
+numbers.every(function(item,index,array){
+    return(item &gt; 2);
+});//false
+some();//若有一项的函数返回true,则返回true
+numbers.some(function(item,index,array){
+    return(item &gt; 2);
+});//true
+filter();//返回该函数会返回true的项所组成的数组
+numbers.filter(function(item,index,array){
+    return(item &gt; 2);
+});//3,4,5,4,3
+forEach();//无返回
+map();//返回每次函数调用的结果组成的数组
+numbers.map(function(item,index,array){
+    return(item *);
+});//2,4,6,8,10,8,6,4,2
+</code></pre><h4 id="归并方法"><a href="#归并方法" class="headerlink" title="归并方法"></a>归并方法</h4><p>参数：对数组中每一个所运行的函数，以及作为归并的基础值<br>传入函数的参数：prev前一个值,cur当前值,index位置,array数组本身<br>传入函数的任何返回值都会作为第一个参数自动传给下一项，第一次迭代发生在数组的第二项上</p>
+<pre><code>var values = [1,2,3,4,5];
+values.reduce(function(pre,cur,index,array){
+    return (pre + cur);
+    });//从前往后，求和15
+values.reduceRight(function(pre,cur,index,array){
+    return (pre + cur);
+    });//从后往前，求和15
+</code></pre><h3 id="Date类型"><a href="#Date类型" class="headerlink" title="Date类型"></a>Date类型</h3><p>1970.1.1 00：00开始计时，距离现在的毫秒数</p>
+<pre><code>var now = new Date();//当前日期
+Date.parse(&apos;May 25, 2004 16:20&apos;);//返回距离某天的毫秒数,若不能反映日期则返回NaN
+var date = new Date(Date.parse(&apos;May 25, 2004 16:20&apos;));
+alert(date);//Tue May 25 2004 16:20:00 GMT+0800 (中国标准时间)
+new Date(&apos;May 25, 2004 16:20&apos;);//相当于后台调用parse函数
+Date.UTC();//参数：年，月份（一月为0），天（1-31，默认1），小时（0-23，默认0），分钟（默认0），秒（默认0），毫秒（默认0）。年月必须填。
+var date = new Date(Date.UTC(2017,1,2,17));
+alert(date);//加完东八区的结果，Fri Feb 03 2017 01:00:00 GMT+0800 (中国标准时间)
+var date1 = new Date(2017,1);//本地时间
+alert(date1);//Wed Feb 01 2017 00:00:00 GMT+0800 (中国标准时间)
+Date.now();//返回调用这个方法时的日期和时间的毫秒数
+var start = Date.now();//等价var start = +new Date();时间戳
+...
+var stop = Date.now();
+var result = stop - start;//中间的时间
+</code></pre><h4 id="继承下来的方法"><a href="#继承下来的方法" class="headerlink" title="继承下来的方法"></a>继承下来的方法</h4><pre><code>valueOf();//返回日期的毫秒表示，可比大小
+toLocaleString();//字符串
+toString();//字符串
+</code></pre><h3 id="RegExp类型（正则表达式）"><a href="#RegExp类型（正则表达式）" class="headerlink" title="RegExp类型（正则表达式）"></a>RegExp类型（正则表达式）</h3><h3 id="Function类型"><a href="#Function类型" class="headerlink" title="Function类型"></a>Function类型</h3><pre><code>函数名仅仅是指向函数的指针
+function name (){}//函数声明
+var name = function(){};//函数表达式
+</code></pre><h4 id="无重载"><a href="#无重载" class="headerlink" title="无重载"></a>无重载</h4><pre><code>同名函数，后者会覆盖前者
+</code></pre><h4 id="函数声明与函数表达式"><a href="#函数声明与函数表达式" class="headerlink" title="函数声明与函数表达式"></a>函数声明与函数表达式</h4><pre><code>解析器会率先读取函数声明，并使其在执行任何代码前可用（函数声明提升）
+函数表达式则必须等到解析器执行到他所在的代码行才会真正被解释执行
+</code></pre><h4 id="作为值的函数"><a href="#作为值的函数" class="headerlink" title="作为值的函数"></a>作为值的函数</h4><pre><code>函数可作为参数，也可作为结果返回
+function add10(num){
+    return num + 10;
+}
+function a(someFunction, someArgument){
+    return someFunction(someArgument);
+}
+var result1 = a(add10,10);//20
+</code></pre><h4 id="函数内部属性"><a href="#函数内部属性" class="headerlink" title="函数内部属性"></a>函数内部属性</h4><ul>
+<li>arguments对象:类数组对象，包含所有传入参数<ul>
+<li>callee属性：指针，指向拥有这个arguments对象的函数</li>
+</ul>
+</li>
+<li>this对象：引用的是函数执行的环境对象，全局作用域中是window<pre><code>严格模式下，this的值为undefined，不是window
+</code></pre></li>
+<li>caller属性：保存调用当前函数的函数的引用<pre><code>全局作用域中调用当前函数，该值为null
+</code></pre></li>
+</ul>
+<hr>
+<pre><code>function a(){}
+var o = {};
+window.a()与o.a()指向同一个函数
+</code></pre><h4 id="函数属性和方法"><a href="#函数属性和方法" class="headerlink" title="函数属性和方法"></a>函数属性和方法</h4><p>函数是对象</p>
+<ul>
+<li>length属性：函数希望接收参数的个数</li>
+<li>prototype属性：原型</li>
+<li>apply()：在特定的作用域中调用函数<br>  apply(this,arguments);//参数数组，arguments为Array实例也可</li>
+<li>call()：在特定的作用域中调用函数<br>  call(this,num1,num2);//列举参数，并不是数组</li>
+<li>bind()：会绑定环境作用域给一个变量</li>
+<li>toString(),toLocaleString()，valueOf()返回函数代码</li>
+</ul>
+<hr>
+<pre><code>call()和apply()可扩充运行的作用域
+function a(){
+    return this.color;
+}
+var o ={color:&apos;blue&apos;};
+window.color = &apos;red&apos;;
+a.call(this);//red
+a.call(window);//red
+a.call(o);//blue
+var b = a.bind(o);
+b();//blue
+</code></pre><h3 id="基本包装类型"><a href="#基本包装类型" class="headerlink" title="基本包装类型"></a>基本包装类型</h3><ul>
+<li>Boolean</li>
+<li>Number</li>
+<li>String</li>
+</ul>
+<hr>
+<pre><code>var s1 = &quot;hello&quot;;//var s1 = new String(&quot;hello&quot;);
+var s2 = s1.substring(s2);
+//s1 = null;自动创建的基本包装类型对象会执行瞬间后被销毁
+var obj = new Object(&quot;hello&quot;);//字符串传给Object构造函数，会创建String实例
+obj instanceof String; //true
+typeof obj;//object
+var num = &apos;25&apos;;
+var number = Number(value);//typeof number &apos;number&apos;
+var obj1 = new Number(value);//typeof obj1 &apos;object&apos;
+</code></pre><h4 id="Boolean类型"><a href="#Boolean类型" class="headerlink" title="Boolean类型"></a>Boolean类型</h4><pre><code>布尔表达式中所有对象都会被转换为true
+typeof //object
+instanceof Boolean //true
+valueOf() //true/false
+toString() //&apos;true&apos;/&apos;false&apos;
+</code></pre><h4 id="Number类型"><a href="#Number类型" class="headerlink" title="Number类型"></a>Number类型</h4><pre><code>toString() //可以转换进制
+toFixed() //按照指定的小数位返回数值的字符串表示
+toExponential();//科学计数法
+toPrecision();//fixed或exponential
+var num = 10;
+num.toFixed(2);//&apos;10.00&apos;
+num = 10.005;
+num.toFixed(2);//&apos;10.01&apos;四舍五入
+</code></pre><h4 id="String类型"><a href="#String类型" class="headerlink" title="String类型"></a>String类型</h4><ul>
+<li>length属性</li>
+<li>方法<ul>
+<li>charAt():返回某个位置的字符的字符串</li>
+<li>charCodeAt():返回字符编码</li>
+<li>concat():拼接字符串，原字符串不变</li>
+<li>slice():原字符串不变，复制某段字符串，不含最后一个位置的字符<br>负参数加上字符串的长度</li>
+<li>substr():原字符串不变，复制某段字符串，传参需要的字符个数<br>第一个负参数（位置）上字符串的长度，第二个负参数为0</li>
+<li>substring():原字符串不变，复制某段字符串，不含最后一个位置的字符<br>负参数为0</li>
+<li>indexOf():<strong>从前向后</strong>找某字符串，若没找到返回-1，可以从某位置开始搜索</li>
+<li>lastIndexOf():<strong>从后向前</strong>找某字符串，若没找到返回-1，可以从某位置开始搜索</li>
+<li>trim():删除前置和后置的空格的新字符串</li>
+<li>toLowerCase():小写常用</li>
+<li>toLocaleLowerCase():小写</li>
+<li>toUpperCase():大写常用</li>
+<li>toLocaleUpperCase():大写</li>
+<li>match():正则表达式或RegExp对象，匹配字符串</li>
+<li>search():同上，从前向后查</li>
+<li>replace():</li>
+<li>split():根据指定的分隔符分割字符串成数组并返回</li>
+<li>localeCompare():比较两个字符串先后，区分大小写<br>  在字母表中，若字符串在字符串参数前，返回负数；若相等，返回0；若在之后，返回正数</li>
+<li>fromCharCode():构造函数本身一种静态方法，接收编码生成字符串</li>
+</ul>
+</li>
+</ul>
+<hr>
+<pre><code>var string = &quot;hello world&quot;;
+string.substr(-3);//&quot;rld&quot;
+string.substr(3,-4);//&quot;&quot;
+string.substring(3,-4);//(0,3)&quot;hel&quot;
+String.fromCharCode(104,101,108,108,111);//&quot;hello&quot;
+</code></pre><h3 id="单体内置对象"><a href="#单体内置对象" class="headerlink" title="单体内置对象"></a>单体内置对象</h3><h4 id="Global对象"><a href="#Global对象" class="headerlink" title="Global对象"></a>Global对象</h4><p>所有在全局作用域中定义的属性和函数，都是Global对象的属性<br>Web浏览器都是将这个全局对象作为window对象的一部分加以实现的。<br>因此，在全局作用域中声明的所有变量和函数，都成为了window对象的属性</p>
+<ul>
+<li>encodeURI()</li>
+<li>encodeURIComponent()</li>
+<li>eval():解析，参数为可执行代码，危险</li>
+</ul>
+<hr>
+<pre><code>var global = function(){
+    return this;
+}//未给this指定值，默认为Global对象
+</code></pre><h4 id="Math对象"><a href="#Math对象" class="headerlink" title="Math对象"></a>Math对象</h4><ul>
+<li>属性</li>
+<li>方法<ul>
+<li>max(),min()</li>
+<li>ceil()向上取整,floor()向下取整,round()四舍五入</li>
+<li>random() 随机数，[0,1)</li>
+</ul>
+</li>
+</ul>
+<hr>
+<pre><code>var values = [1,2,3,4,5,6,7,8];
+var max = Math.max.apply(Math, values);//Math对象调用max()函数，传参数组为values
+</code></pre>
+    </article>
+    <!-- 前后页  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2018/03/30/悦城18.3.30/" title= 悦城18.3.30 笔记 >
+                    <div class="prevTitle">悦城18.3.30 笔记</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+    <!--PC版-->
+
+    <!--PC版-->
+
+
+    
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+    
+        
+            
+                <a href="//github.com/ChloeShan" class="iconfont-archer github" target="_blank" title="github"></a>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+    <div class="busuanzi-container">
+        <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span>
+        </span>
+    </div>
+    
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper">
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#引用类型"><span class="toc-number">1.</span> <span class="toc-text">引用类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Object类型"><span class="toc-number">1.0.1.</span> <span class="toc-text">Object类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Array类型"><span class="toc-number">1.0.2.</span> <span class="toc-text">Array类型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#检测数组"><span class="toc-number">1.0.2.1.</span> <span class="toc-text">检测数组</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#转换方法"><span class="toc-number">1.0.2.2.</span> <span class="toc-text">转换方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#栈方法"><span class="toc-number">1.0.2.3.</span> <span class="toc-text">栈方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#队列方法"><span class="toc-number">1.0.2.4.</span> <span class="toc-text">队列方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#重排序方法"><span class="toc-number">1.0.2.5.</span> <span class="toc-text">重排序方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#操作方法"><span class="toc-number">1.0.2.6.</span> <span class="toc-text">操作方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#位置方法"><span class="toc-number">1.0.2.7.</span> <span class="toc-text">位置方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#迭代方法"><span class="toc-number">1.0.2.8.</span> <span class="toc-text">迭代方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#归并方法"><span class="toc-number">1.0.2.9.</span> <span class="toc-text">归并方法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Date类型"><span class="toc-number">1.0.3.</span> <span class="toc-text">Date类型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#继承下来的方法"><span class="toc-number">1.0.3.1.</span> <span class="toc-text">继承下来的方法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RegExp类型（正则表达式）"><span class="toc-number">1.0.4.</span> <span class="toc-text">RegExp类型（正则表达式）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Function类型"><span class="toc-number">1.0.5.</span> <span class="toc-text">Function类型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#无重载"><span class="toc-number">1.0.5.1.</span> <span class="toc-text">无重载</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#函数声明与函数表达式"><span class="toc-number">1.0.5.2.</span> <span class="toc-text">函数声明与函数表达式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#作为值的函数"><span class="toc-number">1.0.5.3.</span> <span class="toc-text">作为值的函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#函数内部属性"><span class="toc-number">1.0.5.4.</span> <span class="toc-text">函数内部属性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#函数属性和方法"><span class="toc-number">1.0.5.5.</span> <span class="toc-text">函数属性和方法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基本包装类型"><span class="toc-number">1.0.6.</span> <span class="toc-text">基本包装类型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Boolean类型"><span class="toc-number">1.0.6.1.</span> <span class="toc-text">Boolean类型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Number类型"><span class="toc-number">1.0.6.2.</span> <span class="toc-text">Number类型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#String类型"><span class="toc-number">1.0.6.3.</span> <span class="toc-text">String类型</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#单体内置对象"><span class="toc-number">1.0.7.</span> <span class="toc-text">单体内置对象</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Global对象"><span class="toc-number">1.0.7.1.</span> <span class="toc-text">Global对象</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Math对象"><span class="toc-number">1.0.7.2.</span> <span class="toc-text">Math对象</span></a></li></ol></li></ol></li></ol></li></ol>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> Total : 8 </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/04</span><a class="archive-post-title" href= "/2018/04/04/JS高程笔记（二）/" >JS高程笔记（二）</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/03/30/悦城18.3.30/" >悦城18.3.30 笔记</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/26</span><a class="archive-post-title" href= "/2018/03/26/JS高程笔记（一）/" >JS高程笔记（一）</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/03/26/悦城18.3.23/" >悦城18.3.23 笔记</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/20</span><a class="archive-post-title" href= "/2018/03/20/《CSS高级Web标准解决方案》之笔记（一）/" >《CSS高级Web标准解决方案》之笔记（一）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/16</span><a class="archive-post-title" href= "/2018/03/16/悦城18.3.16/" >悦城18.3.16 笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/09</span><a class="archive-post-title" href= "/2018/03/09/悦城18.3.9/" >悦城18.3.9 笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/06</span><a class="archive-post-title" href= "/2018/02/06/JavaScript-sort函数/" >JavaScript sort函数</a>
+        </li>
+    
+    </div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="JavaScript"><span class="iconfont-archer">&#xe606;</span>JavaScript</span>
+    
+        <span class="sidebar-tag-name" data-tags="悦城"><span class="iconfont-archer">&#xe606;</span>悦城</span>
+    
+        <span class="sidebar-tag-name" data-tags="CSS"><span class="iconfont-archer">&#xe606;</span>CSS</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br/>
+    1、请确保node版本大于6.2<br/>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: '/'
+    }
+</script>
+    <!-- 不蒜子  -->
+    
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <!-- CNZZ统计  -->
+    
+    </div>
+    </body>
+</html>
+
+
