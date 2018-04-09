@@ -312,7 +312,7 @@
             <script>window._bd_share_config = { "common": { "bdSnsKey": {}, "bdText": "", "bdMini": "2", "bdMiniList": false, "bdPic": "", "bdStyle": "1", "bdSize": "16" }, "share": {} }; with (document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = "/static/api/js/share.js"];</script>
             <div class="post-intro-meta">
                 <span class="post-intro-calander iconfont-archer">&#xe676;</span>
-                <span class="post-intro-time">2018/04/08</span>
+                <span class="post-intro-time">2018/04/09</span>
                 
                 <span id="busuanzi_container_page_pv" class="busuanzi-pv">
                     <span class="iconfont-archer">&#xe604;</span>
@@ -337,9 +337,12 @@
             <main class="main post-page">
     <article class="article-entry">
         <ul>
-<li>HTML5新特性<ul>
-<li>新的文档类型  (New Doctype)<br><code>&lt;!DOCTYPE html&gt;</code></li>
-<li>脚本和链接无需type  (No More Types for Scripts and Links)<br><code>&lt;link rel=&quot;stylesheet&quot; href=&quot;path/to/stylesheet.css&quot;/&gt;</code><br><code>&lt;script src=&quot;path/to/script.js&quot;&gt;&lt;/script&gt;</code></li>
+<li>HTML5新特性</li>
+</ul>
+<blockquote>
+<ul>
+<li>新的文档类型  (New Doctype)  <code>&lt;!DOCTYPE html&gt;</code></li>
+<li>脚本和链接无需type  (No More Types for Scripts and Links)<br><code>&lt;link rel=&quot;stylesheet&quot; href=&quot;path/to/stylesheet.css&quot;/&gt;</code><br><code>&lt;script&gt; src=&quot;path/to/script.js&quot;&gt;&lt;/script&gt;</code></li>
 <li>语义Header和Footer，可代替div</li>
 <li>Hgroup，可对标签进行分组</li>
 <li>标记元素mark，可对查询结果进行高亮</li>
@@ -354,19 +357,70 @@
 <li>显示控制条</li>
 <li>正规表达式</li>
 </ul>
-</li>
-<li>HTML语义化<blockquote>
+</blockquote>
+<ul>
+<li>HTML语义化</li>
+</ul>
+<blockquote>
 <p>用最恰当的HTML元素标记的内容。<br>优点：<br>1 提升可访问性；<br>2 SEO；<br>3 结构清晰，利于维护；</p>
 </blockquote>
-</li>
+<ul>
 <li>tite与h1的区别、b与strong的区别、i与em的区别？</li>
 <li>HTML废弃的标签</li>
-<li>html5有哪些新特性、移除了那些元素？如何处理HTML5新标签的浏览器兼容- 问题？如何区分 HTML 和 HTML5？</li>
+<li>html5移除了那些元素？如何处理HTML5新标签的浏览器兼容问题？如何区分 HTML 和 HTML5？</li>
 <li>简述一下你对HTML语义化的理解？</li>
+</ul>
+<blockquote>
+<p>根据内容的结构化（内容语义化），选择合适的标签（代码语义化）便于开发者阅读和写出更优雅的代码的同时让浏览器的爬虫和机器很好地解析。</p>
+</blockquote>
+<ul>
 <li>Doctype作用？严格模式与混杂模式如何区分？它们有何意义?</li>
+</ul>
+<blockquote>
+<ul>
+<li>声明文档类型<ul>
+<li>严格（标准）模式<ul>
+<li>浏览器按w3c标准解析执行代码</li>
+<li>严格DTD,有URI的过度DTD</li>
+</ul>
+</li>
+<li>准标准模式<ul>
+<li>过渡型</li>
+<li>框架集型</li>
+</ul>
+</li>
+<li>混杂模式<ul>
+<li>浏览器自己的方式解析执行代码</li>
+<li>无URI过度的DTD,DTD不存在或格式不对</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>区分<ul>
+<li>标准盒和怪异盒</li>
+<li>行内元素高和宽（span）可设置</li>
+<li>可设置百分比的高度</li>
+<li>用margin:0 auto设置水平居中在IE下会失效</li>
+<li>quirk模式下设置图片的padding会失效</li>
+<li>quirk模式下Table中的字体属性不能继承上层的设置</li>
+<li>quirk模式下white-space:pre会失效</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<ul>
 <li>HTML5 为什么只需要写 &lt;!DOCTYPE HTML&gt;？</li>
-<li>浏览器的标准模式和怪异模式</li>
+</ul>
+<blockquote>
+<p>HTML4.01中的doctype需要对DTD进行引用，因为HTML4.01基于SGML。而HTML5不基于SGML，因此不需要对DTD进行引用，但是需要doctype来规范浏览器的行为。其中，SGML是标准通用标记语言，简单的说，就是比HTML，XML更老的标准，这两者都是由SGML发展而来的。但是HTML5不是的。</p>
+</blockquote>
+<ul>
 <li>xhtml和html的区别</li>
+</ul>
+<blockquote>
+<p><strong>xhtml 1.0 标准</strong><br>html元素需要有xml相关属性<br>元素名必须是小写字母<br>元素属性用”包围,不能为空值<br>在内容里不能有&amp;, 需要转义，包括其他特殊字符&lt;&gt;<br>空元素以 /&gt;结尾<br><strong>strict html 4.01 标准</strong><br><code>&lt;html&gt;</code> 必须是root元素<br><code>&lt;head&gt;</code>和<code>&lt;body&gt;</code> 是 <code>&lt;html&gt;</code>中一定有且只有的元素<br><code>&lt;head&gt;</code> 必须有 <code>&lt;title&gt;</code>， <code>&lt;meta&gt;</code>和<code>&lt;style&gt;</code>可选, 他们只能在<head>里<br><code>&lt;body&gt;</code> 里只能有 block元素<br>block元素不能放在inline元素里<br>block元素不能放在<code>&lt;p&gt;</code>里<br><code>&lt;ul&gt;</code>和<code>&lt;ol&gt;</code>中只能有<code>&lt;li&gt;</code>元素,但<code>&lt;li&gt;</code>里可以放其他，包括block元素<br><code>&lt;blockquote&gt;</code>中只能放block元素</head></p>
+</blockquote>
+<ul>
 <li>使用data-的好处</li>
 <li>meta标签</li>
 <li>canvas</li>
@@ -377,8 +431,32 @@
 <li>meta viewport原理</li>
 <li>行内元素有哪些？块级元素有哪些？ 空(void)元素有那些？</li>
 <li>页面导入样式时，使用link和@import有什么区别？</li>
+</ul>
+<blockquote>
+<ul>
+<li>link<ul>
+<li>html标签</li>
+<li>引入的css被同时加载</li>
+<li>无兼容性问题</li>
+<li>dom可控</li>
+</ul>
+</li>
+<li>@import<ul>
+<li>css语法 css2.1 ie5+</li>
+<li>页面加载完后css被加载</li>
+<li>dom不可控</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<ul>
 <li>介绍一下你对浏览器内核的理解？</li>
 <li>常见的浏览器内核有哪些？</li>
+</ul>
+<blockquote>
+<p>Trident ie浏览器<br>Gecko Firefox浏览器<br>Webkit Safari浏览器 谷歌浏览器<br>Presto Opera浏览器</p>
+</blockquote>
+<ul>
 <li>HTML5的离线储存怎么使用，工作原理能不能解释一下？</li>
 <li>浏览器是怎么对HTML5的离线储存资源进行管理和加载的呢？</li>
 <li>请描述一下 cookies，sessionStorage 和 localStorage 的区别？</li>
@@ -390,7 +468,8 @@
 <li>页面可见性（Page Visibility）API 可以有哪些用途？</li>
 <li>如何在页面上实现一个圆形的可点击区域？</li>
 <li>实现不使用 border 画出1px高的线，在不同浏览器的Quirksmode和CSSCompat- 模式下都能保持同一效果。</li>
-<li><p>网页验证码是干嘛的，是为了解决什么安全问题？</p>
+<li>网页验证码是干嘛的，是为了解决什么安全问题？</li>
+</ul>
 <blockquote>
 <p>增加验证码的主要目的是减少非正常的请求,以保护用户权益.所谓非正常的请求有以下:</p>
 <ol>
@@ -399,8 +478,6 @@
 <li>频繁的使用某一个涉及后台性能瓶颈的功能,导致系统负载过高.</li>
 </ol>
 </blockquote>
-</li>
-</ul>
 
     </article>
     <!-- 前后页  -->
@@ -661,7 +738,7 @@
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/08</span><a class="archive-post-title" href= "/2018/04/08/前端基础问题之HTML/" >前端基础问题之HTML</a>
+            <span class="archive-post-date">04/09</span><a class="archive-post-title" href= "/2018/04/09/前端基础问题之HTML/" >前端基础问题之HTML</a>
         </li>
     
     
